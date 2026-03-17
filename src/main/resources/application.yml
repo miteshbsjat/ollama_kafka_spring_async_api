@@ -1,0 +1,21 @@
+server:
+  port: 9090
+spring:
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: ollama-job-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.oksai" # Security setting: tell Spring it's safe to deserialize into this package
+  ai:
+    ollama:
+      base-url: http://192.168.124.7:11434
+      chat:
+        options:
+          model: llama3.1:latest # Or whichever model you are running locally
